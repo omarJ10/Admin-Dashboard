@@ -1,0 +1,34 @@
+.course-list-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 100%;
+    align-items: center; 
+  }
+  
+  .data-grid-container {
+    height: 400px;
+    width: 100%;
+    max-width: 100%; 
+  }
+  
+  @media screen and (max-width: 1200px) {
+    .course-list-container {
+      justify-content: flex-start;
+      margin-top: 2rem;
+    }
+  }
+  
+  @media screen and (max-width: 768px) {
+    .course-list-container {
+      margin-top: 2rem;
+    }
+  
+    .data-grid-container {
+      width: 100%;
+    }
+    .a {
+      margin-top: 1rem;
+    }
+  }
+  
