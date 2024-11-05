@@ -1,10 +1,10 @@
 import React from 'react'
 import InstitutList from '../../components/InstitutComponents/InstitutList/InstitutList'
 
-function UniversityManagement() {
+function InstitutManagement() {
   return (
     <div className="course-management-container">
-      <h2>Instituts Management</h2>
+      
       <div className="course-management-content">
         <InstitutList/>
       </div>
@@ -12,4 +12,4 @@ function UniversityManagement() {
   )
 }
 
-export default UniversityManagement
+export default InstitutManagement

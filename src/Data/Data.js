@@ -4,11 +4,16 @@ import {
   UilClipboardAlt,
   UilUsersAlt,
 } from "@iconscout/react-unicons";
+
+import { UilUniversity } from '@iconscout/react-unicons'
+import { UilBookOpen } from '@iconscout/react-unicons'
 import EventIcon from '@mui/icons-material/Event';
 import LiveTvIcon from '@mui/icons-material/LiveTv';
 
 // Analytics Cards imports
 import { UilUsdSquare, UilMoneyWithdrawal } from "@iconscout/react-unicons";
+import { UilBuilding } from '@iconscout/react-unicons'
+import { UilMessage } from '@iconscout/react-unicons'
 
 // Recent Cards Imports
 import img1 from "../imgs/img1.png";
@@ -35,13 +40,31 @@ export const SidebarData = [
   },
   {
       icon: EventIcon,
-      heading: 'Events'
+      heading: '....'
   },
  
   {
       icon: LiveTvIcon,
       heading: 'LIVE'
   },
+    {
+      icon: UilBookOpen,
+      heading: 'Matiere'
+  },
+
+    {
+        icon: UilUniversity,
+        heading: 'University'
+    },
+    {
+        icon: UilBuilding,
+        heading: 'Institut'
+    },
+    {
+        icon: UilMessage,
+        heading: 'Messages'
+    },
+
   
 ];
 

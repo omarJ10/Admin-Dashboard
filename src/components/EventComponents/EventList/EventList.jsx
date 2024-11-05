@@ -1,109 +1,108 @@
 import React, { useState, useEffect } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import axios from "axios";
+import { Button, IconButton, Container, Box, Typography } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import IconButton from "@mui/material/IconButton";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
 
 function EventList() {
-
     const [events, setDocument] = useState([]);
-    const navigate = useNavigate(); 
-  
+    const navigate = useNavigate();
+
     useEffect(() => {
-      const fetchEvents = async () => {
-        try {
-          const response = await axios.get("http://localhost:8082/api/events/");
-          console.log(response.data);
-          setDocument(response.data);
-        } catch (err) {
-          console.error("Error fetching events:", err);
-          if (err.response) {
-            // The request was made and the server responded with a status code
-            console.error("Status code:", err.response.status);
-            console.error("Response data:", err.response.data);
-          } else if (err.request) {
-            // The request was made but no response was received
-            console.error("No response received:", err.request);
-          } else {
-            // Something happened in setting up the request that triggered an Error
-            console.error("Error setting up request:", err.message);
-          }
-        }
-      };
-  
-      fetchEvents();
+        const fetchEvents = async () => {
+            try {
+                const response = await axios.get("http://localhost:8082/api/events/");
+                setDocument(response.data);
+            } catch (err) {
+                console.error("Error fetching events:", err);
+            }
+        };
+        fetchEvents();
     }, []);
-  
+
     const handleDelete = async (id) => {
-      try {
-        await axios.delete(`http://localhost:8082/api/events/${id}`);
-        setDocument(events.filter((document) => document._id !== id));
-      } catch (err) {
-        console.error(err);
-      }
+        try {
+            await axios.delete(`http://localhost:8082/api/events/${id}`);
+            setDocument(events.filter((document) => document._id !== id));
+        } catch (err) {
+            console.error(err);
+        }
     };
-  
-    const handleEdit = (id,event) => {
-      event.stopPropagation();
-      navigate(`/events/update/${id}`); // Use navigate function
+
+    const handleEdit = (id, event) => {
+        event.stopPropagation();
+        navigate(`/events/update/${id}`);
     };
-  
+
     const columns = [
-      { field: "_id", headerName: "ID", width: 70 },
-      { field: "title", headerName: "Title", width: 100 },
-      { field: "start", headerName: "start", width: 150 },
-      { field: "end", headerName: "end", width: 150 },
-      { field: "num", headerName: "num", width: 50 },
-      { field: "meet", headerName: "meet", width: 200 },
-      { field: "description", headerName: "description", width: 100 },
-      { field: "linkdocs", headerName: "linkdocs", width: 200 },
-      
-      {
-        field: "actions",
-        headerName: "Actions",
-        width: 200,
-        renderCell: (params) => (
-          <>
-            <IconButton aria-label="edit" onClick={(event) => handleEdit(params.row._id, event)}>
-              <EditIcon />
-            </IconButton>
-            <IconButton
-              aria-label="delete"
-              onClick={() => handleDelete(params.row._id)}
-            >
-              <DeleteIcon />
-            </IconButton>
-          </>
-        ),
-      },
+        { field: "_id", headerName: "ID", width: 70 },
+        { field: "title", headerName: "Title", flex: 1 },
+        { field: "start", headerName: "Start", flex: 1 },
+        { field: "end", headerName: "End", flex: 1 },
+        { field: "num", headerName: "Num", width: 80 },
+        { field: "meet", headerName: "Meet", flex: 1 },
+        { field: "description", headerName: "Description", flex: 1 },
+        { field: "linkdocs", headerName: "Link Docs", flex: 1 },
+        {
+            field: "actions",
+            headerName: "Actions",
+            width: 150,
+            renderCell: (params) => (
+                <>
+                    <IconButton
+                        aria-label="edit"
+                        onClick={(event) => handleEdit(params.row._id, event)}
+                    >
+                        <EditIcon color="primary" />
+                    </IconButton>
+                    <IconButton
+                        aria-label="delete"
+                        onClick={() => handleDelete(params.row._id)}
+                    >
+                        <DeleteIcon color="error" />
+                    </IconButton>
+                </>
+            ),
+        },
     ];
-  
+
     const rows = events.map((document, index) => ({
-      ...document,
-      id: index + 1, // Assuming you want to display a serial number
+        ...document,
+        id: index + 1,
     }));
 
-
-  return (
-    <div className="course-list-container">
-      <div className="data-grid-container">
-        <a href="/events/add" className="btn btn-primary mb-2 mx-auto p-2">Add Event</a>
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: { page: 0, pageSize: 5 },
-            },
-          }}
-          pageSizeOptions={[5, 10]}
-          checkboxSelection
-        />
-      </div>
-    </div>
-  )
+    return (
+        <Container maxWidth="lg" style={{ marginTop: "20px" }}>
+            <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+                <Typography variant="h5" component="h1">
+                    Event List
+                </Typography>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    href="/events/add"
+                    style={{ textTransform: "none" }}
+                >
+                    Add Event
+                </Button>
+            </Box>
+            <Box style={{ height: 400, width: "100%" }}>
+                <DataGrid
+                    rows={rows}
+                    columns={columns}
+                    initialState={{
+                        pagination: {
+                            paginationModel: { page: 0, pageSize: 5 },
+                        },
+                    }}
+                    pageSizeOptions={[5, 10]}
+                    checkboxSelection
+                />
+            </Box>
+        </Container>
+    );
 }
 
-export default EventList
+export default EventList;

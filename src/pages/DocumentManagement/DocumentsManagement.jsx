@@ -5,7 +5,7 @@ import DocumentList from "../../components/DocumentComponents/DocumentList/Docum
 function DocumentsManagement() {
   return (
     <div className="course-management-container">
-      <h2>Documents Management</h2>
+      
       <div className="course-management-content">
         <DocumentList/>
       </div>
