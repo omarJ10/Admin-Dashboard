@@ -51,10 +51,6 @@ function DocumentUpdate() {
             link
         };
 
-
-
-
-
         axios.put(`http://localhost:8082/admin/document/${id}`, data)
             .then(() => navigate('/documents'))
             .catch(error => console.log(error));
