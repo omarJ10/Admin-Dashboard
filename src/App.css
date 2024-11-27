@@ -19,45 +19,48 @@
     #96fd86 51.55%,
     #40ecb9 90.85%
   );
-  height: 100vh;
+  height: 100vh;  /* Ensure the app fills the entire screen height */
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column; /* Allow content to stack vertically */
   font-family: 'Inter', sans-serif;
 }
 
 .AppGlass {
   display: grid;
-  height: 97%;
-  width: 97%;
+  height: 100%;  /* Ensure AppGlass takes full screen height */
+  width: 100%;
   background: var(--glass);
   border-radius: 2rem;
   gap: 16px;
   grid-template-columns: 11rem auto 20rem;
+  position: relative;  /* To handle the overflow scrolling */
   overflow: hidden;
 }
 
 .main-content {
   grid-column: 2 / 3;
-  overflow-y: auto;
+  overflow-y: auto; /* Allow vertical scrolling for content if it exceeds the available height */
+  height: calc(100vh - 40px); /* Ensure content takes full height minus any padding */
+  
+  box-sizing: border-box;  /* Ensure padding doesn't affect the width */
 }
 
 @media screen and (max-width: 1200px) {
   .AppGlass {
     grid-template-columns: 10% 1fr 20rem;
-    overflow-y: auto;
   } 
 }
 
 @media screen and (max-width: 768px) {
   .AppGlass {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr;  /* Stack the layout into one column */
     grid-template-rows: auto 1fr auto;
-    overflow-y: auto;
   }
 
   .main-content {
-    grid-column: 1 / -1;
+    grid-column: 1 / -1;  /* Allow main content to span the full width */
+    height: auto; /* Let the content grow as needed */
+    padding: 10px; /* Reduce padding for smaller screens */
   }
 
   .RightSide {

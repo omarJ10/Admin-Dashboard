@@ -7,14 +7,17 @@
   font-weight: bold !important;
 }
 
-.Table td,
-th {
+.Table td, th {
   border: none !important;
+  white-space: nowrap; /* Prevent text from overflowing */
+  overflow: hidden; /* Hide overflow content */
+  text-overflow: ellipsis; /* Add ellipsis (...) for overflowing text */
 }
 
 .Table:first-child {
   border-radius: 0.7rem !important;
 }
+
 .status {
   padding: 8px;
   border-radius: 9px;
@@ -24,20 +27,51 @@ th {
   color: #00b5ff !important;
 }
 
+/* Add scroll to table for small screens */
+.TableContainer {
+  overflow-x: auto; /* Enable horizontal scrolling */
+  padding: 10px; /* Add some padding to the container */
+}
+
 @media screen and (max-width: 1200px) {
   .Table {
-    width: 170%;
+    width: 100%; /* Make sure the table takes full width */
     margin-top: 2rem;
   }
 }
 
-
 @media screen and (max-width: 768px) {
-  .Table{
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 23rem;
+  /* On smaller screens, make the table container responsive */
+  .Table {
+    width: 100%; /* Ensure the table fits within the screen */
+    margin-top: 2rem;
+  }
+
+  .Table td, .Table th {
+    font-size: 14px; /* Adjust font size for small screens */
+    padding: 8px; /* Adjust padding for better spacing */
+    white-space: normal; /* Allow text to wrap on small screens */
+  }
+
+  /* Adjust column widths for smaller screens */
+  .Table td:nth-child(6), .Table th:nth-child(6) {
+    max-width: 150px; /* Limit Gmail column width */
+  }
+
+  .Table td:nth-child(2), .Table th:nth-child(2) {
+    max-width: 200px; /* Limit User Email column width */
+  }
+}
+
+/* Optional: Adjustments for very small screens (mobile) */
+@media screen and (max-width: 480px) {
+  .Table {
+    width: 100%; /* Ensure the table takes full width on mobile */
+    margin-top: 1rem;
+  }
+
+  .Table td, .Table th {
+    font-size: 12px; /* Reduce font size even more for smaller screens */
+    padding: 6px; /* Reduce padding to avoid crowding */
   }
 }

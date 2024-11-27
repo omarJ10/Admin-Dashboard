@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -8,68 +8,101 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
 
-
+// A helper function for styling the status cell
 const makeStyle = (status) => {
-  if (status === 'paid') {
-    return {
-      background: 'rgb(145 254 159 / 47%)',
-      color: 'green',
-    };
-  } else if (status === 'pending') {
-    return {
-      background: '#ffadad8f',
-      color: 'red',
-    };
-  } else if (status === 'declined') {
-    return {
-      background: '#d3d3d3',
-      color: '#a9a9a9',
-    };
-  } else {
-    return {
-      background: '#59bfff',
-      color: 'white',
-    };
+  switch (status) {
+    case "accepted":
+      return { background: "rgb(145 254 159 / 47%)", color: "green" };
+    case "pending":
+      return { background: "#ffadad8f", color: "red" };
+    case "not valid":
+      return { background: "#d3d3d3", color: "#a9a9a9" };
+    default:
+      return { background: "#59bfff", color: "white" };
   }
 };
 
 export default function PaymentTable() {
   const [rows, setRows] = useState([]);
+  const [loading, setLoading] = useState(true); // Loading state to show a spinner while data is fetched
+  const [error, setError] = useState(null); // Error handling
+  const [filterStatus, setFilterStatus] = useState("all"); // State for the selected filter
 
-  useEffect(() => {
-    fetch('http://localhost:8082/api/fetchPayments')
-      .then(response => response.json())
-      .then(data => setRows(data))
-      .catch(error => console.error('Error fetching data:', error));
+  const fetchPayments = useCallback(async () => {
+    try {
+      const response = await fetch("http://localhost:8082/api/fetchrequests2");
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
+      }
+      const data = await response.json();
+      console.log("Fetched payment data:", data);
+      setRows(data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
+  useEffect(() => {
+    fetchPayments();
+  }, [fetchPayments]);
+
   const handleStatusUpdate = (id, newStatus) => {
-    fetch(`http://localhost:8082/api/payment/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+    fetch(`http://localhost:8082/api/request2/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ status: newStatus }),
     })
-      .then(response => response.json())
-      .then(updatedPayment => {
-        setRows(prevRows =>
-          prevRows.map(row =>
-            row._id === updatedPayment._id ? updatedPayment : row
-          )
+      .then((response) => response.json())
+      .then((updatedPayment) => {
+        console.log("Updated payment:", updatedPayment);
+        setRows((prevRows) =>
+          prevRows.map((row) => (row._id === updatedPayment._id ? updatedPayment : row))
         );
       })
-      .catch(error => console.error('Error updating status:', error));
+      .catch((error) => console.error("Error updating status:", error));
   };
+
+  const filteredRows = rows.filter((row) => {
+    if (filterStatus === "all") return true; // Show all if filter is set to 'all'
+    return row.status === filterStatus; // Filter by selected status
+  });
+
+  if (loading) {
+    return <div>Loading...</div>; // Add a loading message or spinner
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>; // Add error handling message
+  }
 
   return (
     <div className="Table">
       <h3>Payment Requests</h3>
-      <TableContainer
-        component={Paper}
-        style={{ boxShadow: "0px 13px 20px 0px #80808029" }}
-      >
+
+      {/* Status filter dropdown */}
+      <FormControl fullWidth style={{ marginBottom: "20px" }}>
+        <InputLabel>Filter by Status</InputLabel>
+        <Select
+          value={filterStatus}
+          onChange={(e) => setFilterStatus(e.target.value)}
+          label="Filter by Status"
+        >
+          <MenuItem value="all">All</MenuItem>
+          <MenuItem value="accepted">Accepted</MenuItem>
+          <MenuItem value="not valid">Not Valid</MenuItem>
+          <MenuItem value="waiting">Waiting</MenuItem>
+        </Select>
+      </FormControl>
+
+      <TableContainer component={Paper} style={{ boxShadow: "0px 13px 20px 0px #80808029" }}>
         <Table sx={{ minWidth: 650 }} aria-label="payment table">
           <TableHead>
             <TableRow>
@@ -77,20 +110,15 @@ export default function PaymentTable() {
               <TableCell align="left">User Email</TableCell>
               <TableCell align="left">Credits</TableCell>
               <TableCell align="left">Num</TableCell>
-              <TableCell align="left">Num AUTH</TableCell>
+              <TableCell align="left">Auth</TableCell>
               <TableCell align="left">Status</TableCell>
               <TableCell align="left"></TableCell>
             </TableRow>
           </TableHead>
-          <TableBody style={{ color: "white" }}>
-            {rows.map((row) => (
-              <TableRow
-                key={row._id}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {row._id}
-                </TableCell>
+          <TableBody>
+            {filteredRows.map((row) => (
+              <TableRow key={row._id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+                <TableCell component="th" scope="row">{row._id}</TableCell>
                 <TableCell align="left">{row.email}</TableCell>
                 <TableCell align="left">{row.credits}</TableCell>
                 <TableCell align="left">{row.num}</TableCell>
@@ -102,15 +130,17 @@ export default function PaymentTable() {
                   <Button
                     variant="contained"
                     className="btn btn-primary"
-                    onClick={() => handleStatusUpdate(row._id, row.status === 'pending' ? 'paid' : 'pending')}
+                    onClick={() =>
+                      handleStatusUpdate(row._id, row.status === "waiting" ? "accepted" : "waiting")
+                    }
                   >
-                    {row.status === 'pending' ? 'Mark as Paid' : 'Revoke Payment'}
+                    {row.status === "waiting" ? "Mark as Paid" : "Revoke Payment"}
                   </Button>
                   <Button
                     variant="contained"
                     className="btn btn-danger"
-                    style={{ marginLeft: '10px' }}
-                    onClick={() => handleStatusUpdate(row._id, 'declined')}
+                    style={{ marginLeft: "10px" }}
+                    onClick={() => handleStatusUpdate(row._id, "not valid")}
                   >
                     Decline
                   </Button>

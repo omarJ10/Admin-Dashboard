@@ -64,7 +64,7 @@ function App() {
               <Route path="*" element={<MainDash />} />
             </Routes>
           </div>
-          <RightSide />
+          
         </div>
       </div>
     </Router>

@@ -3,6 +3,7 @@ import Cards from "../Cards/Cards";
 import Table from "../Table/Table";
 import PaymentTable from "../RequestPayComponents/RequestPayList/RequestList";
 import "./MainDash.css";
+import RequestBalanceTable from "../RequestBalanceComponents/RequestBalanceTable";
 const MainDash = () => {
   return (
     <div className="MainDash">
@@ -10,6 +11,8 @@ const MainDash = () => {
       
       <Table />
       <PaymentTable/>
+      
+
     </div>
   );
 };
