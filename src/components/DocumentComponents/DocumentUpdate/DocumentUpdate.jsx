@@ -19,7 +19,12 @@ function DocumentUpdate() {
 
     useEffect(() => {
         // Fetch the document data
-        axios.get(`http://localhost:8082/admin/document/${id}`)
+        axios.get(`http://localhost:80/admin/document/${id}`, {
+            headers: {
+                'x-admin-token': process.env.ADMIN_TOKEN,
+                'Content-Type': 'application/json'
+            }
+        })
             .then(response => {
                 setUniversity(response.data.university);
                 setInstitut(response.data.institut);
@@ -31,11 +36,21 @@ function DocumentUpdate() {
             .catch(error => console.log(error));
 
         // Fetch universities and institutes for dropdowns
-        axios.get("http://localhost:8082/admin/university")
+        axios.get("http://localhost:80/admin/university", {
+            headers: {
+                'x-admin-token': process.env.ADMIN_TOKEN,
+                'Content-Type': 'application/json'
+            }
+        })
             .then(response => setUniversityOptions(response.data))
             .catch(error => console.log("Error fetching universities:", error));
 
-        axios.get("http://localhost:8082/admin/institut")
+        axios.get("http://localhost:80/admin/institut", {
+            headers: {
+                "Content-Type": "application/json",
+                "x-admin-token": process.env.ADMIN_TOKEN
+            }
+        })
             .then(response => setInstitutOptions(response.data))
             .catch(error => console.log("Error fetching institutes:", error));
     }, [id]);
@@ -51,7 +66,12 @@ function DocumentUpdate() {
             link
         };
 
-        axios.put(`http://localhost:8082/admin/document/${id}`, data)
+        axios.put(`http://localhost:80/admin/document/${id}`, data, {
+            headers: {
+                'x-admin-token': 'gqAe5BCRtlGOVfA1tsE6MJQb69mbLElAok7vGp8PIyKRdkmqkXvqSurpZEHjasser',
+                'Content-Type': 'application/json'
+            }
+        })
             .then(() => navigate('/documents'))
             .catch(error => console.log(error));
     };

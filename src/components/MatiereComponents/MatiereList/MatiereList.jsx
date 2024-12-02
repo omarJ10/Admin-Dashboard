@@ -13,7 +13,13 @@ function MatiereList() {
   useEffect(() => {
     const fetchMatieres = async () => {
       try {
-        const response = await axios.get("http://localhost:8082/api/matieres/");
+        const response = await axios.get("http://localhost:80/api/matieres/", {
+          headers: {
+            "Content-Type": "application/json",
+            "x-admin-token":
+              process.env.ADMIN_TOKEN,
+          },
+        });
         console.log(response.data);
         setDocument(response.data);
       } catch (err) {
@@ -34,7 +40,13 @@ function MatiereList() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:8082/api/matieres/${id}`);
+      await axios.delete(`http://localhost:80/api/matieres/${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+          "x-admin-token":
+            process.env.ADMIN_TOKEN,
+        },
+      });
       setDocument(matieres.filter((document) => document._id !== id));
     } catch (err) {
       console.error(err);

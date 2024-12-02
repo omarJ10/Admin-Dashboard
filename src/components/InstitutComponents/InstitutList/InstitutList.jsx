@@ -13,7 +13,13 @@ function InstitutList() {
   useEffect(() => {
     const fetchInstituts = async () => {
       try {
-        const response = await axios.get("http://localhost:8082/admin/institut");
+        const response = await axios.get("http://localhost:80/admin/institut", {
+          headers: {
+            "Content-Type": "application/json",
+            "x-admin-token":
+              process.env.ADMIN_TOKEN,
+          },
+        });
         setInstituts(response.data);
         console.log(response.data);
       } catch (err) {
@@ -26,7 +32,13 @@ function InstitutList() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:8082/admin/institut/${id}`);
+      await axios.delete(`http://localhost:80/admin/institut/${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+          "x-admin-token":
+            process.env.ADMIN_TOKEN,
+        },
+      });
       setInstituts(instituts.filter((institut) => institut._id !== id));
     } catch (err) {
       console.error("Error deleting institut:", err);

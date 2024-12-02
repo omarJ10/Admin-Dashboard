@@ -13,7 +13,13 @@ function InstitutAdd() {
   useEffect(() => {
     const fetchUniversities = async () => {
       try {
-        const response = await axios.get("http://localhost:8082/admin/university"); // Replace with your API endpoint
+        const response = await axios.get("http://localhost:80/admin/university",{
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-admin-token': process.env.ADMIN_TOKEN
+          },
+        }); // Replace with your API endpoint
         setUniversities(response.data);
       } catch (error) {
         console.error("Error fetching universities:", error);
@@ -28,9 +34,10 @@ function InstitutAdd() {
     const data = { name, university };
 
     try {
-      const response = await axios.post("http://localhost:8082/admin/institut/insert", data, {
+      const response = await axios.post("http://localhost:80/admin/institut/insert", data, {
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'x-admin-token': process.env.ADMIN_TOKEN
         }
 
       });

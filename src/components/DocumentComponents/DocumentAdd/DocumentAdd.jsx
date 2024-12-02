@@ -1,7 +1,17 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { TextField, Button, Typography, Container, Box, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
-import {useNavigate} from "react-router-dom";
+import {
+  TextField,
+  Button,
+  Typography,
+  Container,
+  Box,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+} from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 function DocumentAdd() {
   const navigate = useNavigate();
@@ -17,7 +27,15 @@ function DocumentAdd() {
   useEffect(() => {
     const fetchUniversities = async () => {
       try {
-        const response = await axios.get("http://localhost:8082/admin/university");
+        const response = await axios.get(
+          "http://localhost:80/admin/university",
+          {
+            headers: {
+              "x-admin-token":
+                process.env.ADMIN_TOKEN,
+            },
+          }
+        );
         setUniversityOptions(response.data);
       } catch (error) {
         console.error("Error fetching universities:", error);
@@ -26,7 +44,15 @@ function DocumentAdd() {
 
     const fetchInstituts = async () => {
       try {
-        const response = await axios.get("http://localhost:8082/admin/institut");
+        const response = await axios.get(
+          "http://localhost:80/admin/institut",
+          {
+            headers: {
+              "x-admin-token":
+                process.env.ADMIN_TOKEN,
+            },
+          }
+        );
         setInstitutOptions(response.data);
       } catch (error) {
         console.error("Error fetching institutes:", error);
@@ -41,14 +67,24 @@ function DocumentAdd() {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:8082/admin/document/insert", {
-        university,
-        institut,
-        niveau,
-        Matieres: materials,
-        description,
-        link,
-      });
+      const response = await axios.post(
+        "http://localhost:80/admin/document/insert",
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "x-admin-token":
+              process.env.ADMIN_TOKEN,
+          },
+        },
+        {
+          university,
+          institut,
+          niveau,
+          Matieres: materials,
+          description,
+          link,
+        }
+      );
       console.log(response.data);
       navigate("/documents/");
     } catch (error) {
@@ -57,90 +93,90 @@ function DocumentAdd() {
   };
 
   return (
-      <Container maxWidth="sm" sx={{ marginTop: '100px' }}>
-        <Typography variant="h4" component="h2" gutterBottom>
-          Add Document
-        </Typography>
-        <Box component="form" onSubmit={addDocument} noValidate sx={{ mt: 2 }}>
-          <FormControl fullWidth margin="normal">
-            <InputLabel>University</InputLabel>
-            <Select
-                value={university}
-                onChange={(e) => setUniversity(e.target.value)}
-                label="University"
-            >
-              {universityOptions.map((uni) => (
-                  <MenuItem key={uni._id} value={uni.name}>
-                    {uni.name}
-                  </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-
-          <FormControl fullWidth margin="normal">
-            <InputLabel>Institute</InputLabel>
-            <Select
-                value={institut}
-                onChange={(e) => setInstitute(e.target.value)}
-                label="Institute"
-            >
-              {institutOptions.map((inst) => (
-                  <MenuItem key={inst._id} value={inst.name}>
-                    {inst.name}
-                  </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-
-          <FormControl fullWidth margin="normal">
-            <InputLabel>Level</InputLabel>
-            <Select
-                value={niveau}
-                onChange={(e) => setNiveau(e.target.value)}
-                label="Level"
-            >
-              <MenuItem value="1er Année">1er Année</MenuItem>
-              <MenuItem value="2eme Année">2eme Année</MenuItem>
-              <MenuItem value="3eme Année">3eme Année</MenuItem>
-            </Select>
-          </FormControl>
-
-          <TextField
-              fullWidth
-              label="Materials (comma separated)"
-              value={materials}
-              onChange={(e) => setMaterials(e.target.value)}
-              margin="normal"
-              variant="outlined"
-          />
-          <TextField
-              fullWidth
-              label="Description (comma separated)"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              margin="normal"
-              variant="outlined"
-          />
-          <TextField
-              fullWidth
-              label="Link"
-              value={link}
-              onChange={(e) => setLink(e.target.value)}
-              margin="normal"
-              variant="outlined"
-          />
-
-          <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              sx={{ mt: 3 }}
+    <Container maxWidth="sm" sx={{ marginTop: "100px" }}>
+      <Typography variant="h4" component="h2" gutterBottom>
+        Add Document
+      </Typography>
+      <Box component="form" onSubmit={addDocument} noValidate sx={{ mt: 2 }}>
+        <FormControl fullWidth margin="normal">
+          <InputLabel>University</InputLabel>
+          <Select
+            value={university}
+            onChange={(e) => setUniversity(e.target.value)}
+            label="University"
           >
-            Add
-          </Button>
-        </Box>
-      </Container>
+            {universityOptions.map((uni) => (
+              <MenuItem key={uni._id} value={uni.name}>
+                {uni.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        <FormControl fullWidth margin="normal">
+          <InputLabel>Institute</InputLabel>
+          <Select
+            value={institut}
+            onChange={(e) => setInstitute(e.target.value)}
+            label="Institute"
+          >
+            {institutOptions.map((inst) => (
+              <MenuItem key={inst._id} value={inst.name}>
+                {inst.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        <FormControl fullWidth margin="normal">
+          <InputLabel>Level</InputLabel>
+          <Select
+            value={niveau}
+            onChange={(e) => setNiveau(e.target.value)}
+            label="Level"
+          >
+            <MenuItem value="1er Année">1er Année</MenuItem>
+            <MenuItem value="2eme Année">2eme Année</MenuItem>
+            <MenuItem value="3eme Année">3eme Année</MenuItem>
+          </Select>
+        </FormControl>
+
+        <TextField
+          fullWidth
+          label="Materials (comma separated)"
+          value={materials}
+          onChange={(e) => setMaterials(e.target.value)}
+          margin="normal"
+          variant="outlined"
+        />
+        <TextField
+          fullWidth
+          label="Description (comma separated)"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          margin="normal"
+          variant="outlined"
+        />
+        <TextField
+          fullWidth
+          label="Link"
+          value={link}
+          onChange={(e) => setLink(e.target.value)}
+          margin="normal"
+          variant="outlined"
+        />
+
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          color="primary"
+          sx={{ mt: 3 }}
+        >
+          Add
+        </Button>
+      </Box>
+    </Container>
   );
 }
 

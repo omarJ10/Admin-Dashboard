@@ -10,7 +10,13 @@ function MessageDetails() {
   useEffect(() => {
     const fetchMessage = async () => {
       try {
-        const response = await axios.get(`http://localhost:8082/api/contact_messages/${id}`);
+        const response = await axios.get(`http://localhost:80/api/contact_messages/${id}`,{
+          method: 'GET',
+          headers: {
+            "Content-Type": "application/json",
+        "x-admin-token": process.env.ADMIN_TOKEN
+          },
+        });
         // Assuming response.data is an object with a `message` key
         setMessage(response.data.message);
         console.log(response.data.message);

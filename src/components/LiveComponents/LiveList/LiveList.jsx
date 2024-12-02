@@ -31,17 +31,24 @@ function LiveList() {
     const [rows, setRows] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:8082/api/fetchrequests1')
+        fetch('http://localhost:80/api/fetchrequests1', {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json",
+                "x-admin-token": process.env.ADMIN_TOKEN
+            }
+        })
             .then(response => response.json())
             .then(data => setRows(data))
             .catch(error => console.error('Error fetching data:', error));
     }, []);
 
     const handleStatusUpdate = (id, newStatus) => {
-        fetch(`http://localhost:8082/api/request1/${id}`, {
+        fetch(`http://localhost:80/api/request1/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
+                'x-admin-token': process.env.ADMIN_TOKEN
             },
             body: JSON.stringify({ status: newStatus }),
         })
@@ -69,7 +76,7 @@ function LiveList() {
                             <TableCell align="left">User Email</TableCell>
                             <TableCell align="left">Seance</TableCell>
                             <TableCell align="left">Num</TableCell>
-                            <TableCell align="left">Num AUTH</TableCell>
+                            <TableCell align="left">gmail</TableCell>
                             <TableCell align="left">Status</TableCell>
                             <TableCell align="left">Actions</TableCell>
                         </TableRow>
@@ -85,7 +92,7 @@ function LiveList() {
                                 </TableCell>
                                 <TableCell align="left">{row.seance}</TableCell>
                                 <TableCell align="left">{row.num}</TableCell>
-                                <TableCell align="left">{row.aut}</TableCell>
+                                <TableCell align="left">{row.gmail}</TableCell>
                                 <TableCell align="left">
                                     <span className="status" style={makeStyle(row.status)}>
                                         {row.status}

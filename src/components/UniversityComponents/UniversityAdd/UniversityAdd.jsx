@@ -20,7 +20,12 @@ function UniveristyAdd() {
         };
 
         try {
-            const response = await axios.post("http://localhost:8082/admin/university/insert", matiereData);
+            const response = await axios.post("http://localhost:80/admin/university/insert", matiereData, {
+                headers: {
+                    "Content-Type": "application/json",
+                    "x-admin-token": process.env.ADMIN_TOKEN,
+                },
+            });
             console.log(response.data);
             navigate("/univerity/");
         } catch (error) {

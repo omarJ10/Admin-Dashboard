@@ -13,7 +13,13 @@ function UniversityList() {
   useEffect(() => {
     const fetchUniversities = async () => {
       try {
-        const response = await axios.get("http://localhost:8082/admin/university/");
+        const response = await axios.get("http://localhost:80/admin/university/", {
+          headers: {
+            "Content-Type": "application/json",
+            "x-admin-token":
+              process.env.ADMIN_TOKEN,
+          },
+        });
         console.log(response.data);
         setUniversity(response.data);
       } catch (err) {
@@ -34,7 +40,13 @@ function UniversityList() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:8082/admin/university/${id}`);
+      await axios.delete(`http://localhost:80/admin/university/${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+          "x-admin-token":
+            process.env.ADMIN_TOKEN,
+        },
+      });
       setUniversity(universities.filter((document) => document._id !== id));
     } catch (err) {
       console.error(err);

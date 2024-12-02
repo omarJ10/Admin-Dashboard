@@ -13,7 +13,14 @@ function DocumentList() {
     useEffect(() => {
         const fetchDocuments = async () => {
             try {
-                const response = await axios.get("http://localhost:8082/admin/document");
+                console.log(process.env.ADMIN_TOKEN);
+                const response = await axios.get("http://localhost:80/admin/document", {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "x-admin-token":
+                            process.env.ADMIN_TOKEN,
+                    },
+                });
                 setDocument(response.data);
             } catch (err) {
                 console.error("Error fetching documents:", err);
@@ -24,7 +31,13 @@ function DocumentList() {
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`http://localhost:8082/admin/document/${id}`);
+            await axios.delete(`http://localhost:80/admin/document/${id}`, {
+                headers: {
+                    "Content-Type": "application/json",
+                    "x-admin-token":
+                        process.env.ADMIN_TOKEN,
+                },
+            });
             setDocument(documents.filter((document) => document._id !== id));
         } catch (err) {
             console.error(err);

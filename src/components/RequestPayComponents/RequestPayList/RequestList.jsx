@@ -35,7 +35,14 @@ export default function PaymentTable() {
 
   const fetchPayments = useCallback(async () => {
     try {
-      const response = await fetch("http://localhost:8082/api/fetchrequests2");
+      console.log("hello "+process.env.ADMIN_TOKEN);
+      const response = await fetch("http://localhost:80/api/fetchrequests2",{
+        method: 'GET',
+        headers: {
+          "Content-Type": "application/json",
+          "x-admin-token": "gqAe5BCRtlGOVfA1tsE6MJQb69mbLElAok7vGp8PIyKRdkmqkXvqSurpZEHjasser"
+        },
+      });
       if (!response.ok) {
         throw new Error("Failed to fetch data");
       }
@@ -55,9 +62,12 @@ export default function PaymentTable() {
   }, [fetchPayments]);
 
   const handleStatusUpdate = (id, newStatus) => {
-    fetch(`http://localhost:8082/api/request2/${id}`, {
+    fetch(`http://localhost:80/api/request2/${id}`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      headers: { 
+        "Content-Type": "application/json" ,
+        'x-admin-token': process.env.ADMIN_TOKEN
+      },
       body: JSON.stringify({ status: newStatus }),
     })
       .then((response) => response.json())

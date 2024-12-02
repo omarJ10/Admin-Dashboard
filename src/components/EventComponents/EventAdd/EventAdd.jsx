@@ -18,7 +18,7 @@ function EventAdd() {
 
     useEffect(() => {
         // Fetch the list of matieres from the server
-        axios.get("http://localhost:8082/api/matieres")
+        axios.get("http://localhost:80/api/matieres", { headers: { "x-admin-token": process.env.ADMIN_TOKEN } })
             .then(response => {
                 setMatieres(response.data); // Set the fetched matieres data
             })
@@ -46,7 +46,7 @@ function EventAdd() {
         };
 
         try {
-            const response = await axios.post("http://localhost:8082/api/events", eventData);
+            const response = await axios.post("http://localhost:80/api/events", eventData, { headers: { "x-admin-token": process.env.ADMIN_TOKENn } });
             console.log(response.data);
             navigate("/events/");
         } catch (error) {

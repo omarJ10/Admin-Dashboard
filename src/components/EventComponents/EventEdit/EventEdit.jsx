@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
-import { TextField, Button, Typography, Container, Box, Alert } from "@mui/material";
+import {
+  TextField,
+  Button,
+  Typography,
+  Container,
+  Box,
+  Alert,
+} from "@mui/material";
 
 function EventEdit() {
   const { id } = useParams();
@@ -17,8 +24,15 @@ function EventEdit() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    axios.get(`http://localhost:8082/api/events/${id}`)
-      .then(response => {
+    axios
+      .get(`http://localhost:80/api/events/${id}`, {
+        headers: {
+          "x-admin-token":
+            process.env.ADMIN_TOKEN,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
         const eventData = response.data;
         setTitle(eventData.title);
         setStart(formatDate(eventData.start));
@@ -28,7 +42,7 @@ function EventEdit() {
         setDescription(eventData.description);
         setLinkdocs(eventData.linkdocs);
       })
-      .catch(error => console.log(error));
+      .catch((error) => console.log(error));
   }, [id]);
 
   const formatDate = (dateString) => {
@@ -50,12 +64,19 @@ function EventEdit() {
       num,
       meet,
       description,
-      linkdocs
+      linkdocs,
     };
 
-    axios.put(`http://localhost:8082/api/events/${id}`, eventData)
-      .then(() => navigate('/events'))
-      .catch(error => console.log(error));
+    axios
+      .put(`http://localhost:80/api/events/${id}`, eventData, {
+        headers: {
+          "x-admin-token":
+            process.env.ADMIN_TOKEN,
+          "Content-Type": "application/json",
+        },
+      })
+      .then(() => navigate("/events"))
+      .catch((error) => console.log(error));
   };
 
   return (

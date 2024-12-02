@@ -13,7 +13,13 @@ function EventList() {
     useEffect(() => {
         const fetchEvents = async () => {
             try {
-                const response = await axios.get("http://localhost:8082/api/events/");
+                const response = await axios.get("http://localhost:80/api/events/", {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "x-admin-token":
+                            process.env.ADMIN_TOKEN,
+                    },
+                });
                 setDocument(response.data);
             } catch (err) {
                 console.error("Error fetching events:", err);
@@ -24,7 +30,13 @@ function EventList() {
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`http://localhost:8082/api/events/${id}`);
+            await axios.delete(`http://localhost:80/api/events/${id}`, {
+                headers: {
+                    "Content-Type": "application/json",
+                    "x-admin-token":
+                        process.env.ADMIN_TOKEN,
+                },
+            });
             setDocument(events.filter((document) => document._id !== id));
         } catch (err) {
             console.error(err);

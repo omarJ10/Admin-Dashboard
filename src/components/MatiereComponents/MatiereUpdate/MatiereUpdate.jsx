@@ -12,7 +12,12 @@ function MatiereEdit() {
 
     useEffect(() => {
         console.log("Matiere ID:", id);
-        axios.get(`http://localhost:8082/api/matieres/${id}`)
+        axios.get(`http://localhost:80/api/matieres/${id}`, {
+            headers: {
+                "Content-Type": "application/json",
+                "x-admin-token": process.env.ADMIN_TOKEN,
+            },
+        })
             .then(response => {
                 const matiereData = response.data;
                 setName(matiereData.name);
@@ -33,7 +38,12 @@ function MatiereEdit() {
             img
         };
 
-        axios.put(`http://localhost:8082/api/matieres/${id}`, matiereData)
+        axios.put(`http://localhost:80/api/matieres/${id}`, matiereData, {
+            headers: {
+                "Content-Type": "application/json",
+                "x-admin-token": process.env.ADMIN_TOKEN,
+            },
+        })
             .then(() => navigate('/matiere'))
             .catch(error => {
                 setError("Error updating matiere");

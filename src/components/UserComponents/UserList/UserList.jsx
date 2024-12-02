@@ -10,7 +10,13 @@ function UserList() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get("http://localhost:8082/admin/users");
+        const response = await axios.get("http://localhost:80/admin/users", {
+          
+          headers: {
+            "Content-Type": "application/json",
+            "x-admin-token":process.env.ADMIN_TOKEN,
+          },
+        });
         setUsers(response.data);
       } catch (err) {
         console.error("Error fetching documents:", err);
@@ -33,7 +39,13 @@ function UserList() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:8082/admin/user/${id}`);
+      await axios.delete(`http://localhost:80/admin/user/${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+          "x-admin-token":
+          process.env.ADMIN_TOKEN,
+        },
+      });
       setUsers(users.filter((user) => user._id !== id));
     } catch (err) {
       console.error(err);

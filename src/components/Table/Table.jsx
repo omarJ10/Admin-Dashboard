@@ -44,17 +44,24 @@ export default function BasicTable() {
   const [filterStatus, setFilterStatus] = useState("all"); // State for the selected filter
 
   useEffect(() => {
-    fetch('http://localhost:8082/api/fetchrequests')
+    fetch('http://localhost:80/api/fetchrequests', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-admin-token': 'gqAe5BCRtlGOVfA1tsE6MJQb69mbLElAok7vGp8PIyKRdkmqkXvqSurpZEHjasser',
+      },
+    })
       .then(response => response.json())
       .then(data => setRows(data))
       .catch(error => console.error('Error fetching data:', error));
   }, []);
 
   const handleStatusUpdate = (id, newStatus) => {
-    fetch(`http://localhost:8082/api/request/${id}`, {
+    fetch(`http://localhost:80/api/request/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
+        'x-admin-token': process.env.ADMIN_TOKEN
       },
       body: JSON.stringify({ status: newStatus }),
     })

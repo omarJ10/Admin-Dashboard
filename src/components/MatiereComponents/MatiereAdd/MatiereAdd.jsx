@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { TextField, Button, Typography, Container, Box, MenuItem,Alert } from '@mui/material';
+import { TextField, Button, Typography, Container, Box, Alert } from '@mui/material';
 import { useNavigate } from "react-router-dom";
 
 function MatiereAdd() {
@@ -21,7 +21,12 @@ function MatiereAdd() {
         };
 
         try {
-            const response = await axios.post("http://localhost:8082/api/matieres/add", matiereData);
+            const response = await axios.post("http://localhost:80/api/matieres/add", matiereData, {
+                headers: {
+                    "Content-Type": "application/json",
+                    "x-admin-token": process.env.ADMIN_TOKEN,
+                },
+            });
             console.log(response.data);
             navigate("/matiere/");
         } catch (error) {

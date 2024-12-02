@@ -27,14 +27,10 @@
 
 .AppGlass {
   display: grid;
-  height: 100%;  /* Ensure AppGlass takes full screen height */
-  width: 100%;
   background: var(--glass);
   border-radius: 2rem;
-  gap: 16px;
   grid-template-columns: 11rem auto 20rem;
   position: relative;  /* To handle the overflow scrolling */
-  overflow: hidden;
 }
 
 .main-content {

@@ -15,7 +15,7 @@ function InstitutUpdate() {
     useEffect(() => {
         const fetchUniversities = async () => {
             try {
-                const response = await axios.get("http://localhost:8082/admin/university"); // Adjust endpoint if needed
+                const response = await axios.get("http://localhost:80/admin/university", { headers: { "x-admin-token": process.env.ADMIN_TOKEN } }); // Adjust endpoint if needed
                 setUniversities(response.data);
             } catch (error) {
                 setError("Error fetching universities list");
@@ -28,7 +28,7 @@ function InstitutUpdate() {
 
     // Fetch specific institut details to prefill the form
     useEffect(() => {
-        axios.get(`http://localhost:8082/admin/institut/${id}`)
+        axios.get(`http://localhost:80/admin/institut/${id}`, { headers: { "x-admin-token": process.env.ADMIN_TOKEN } })
             .then(response => {
                 const institutData = response.data;
                 setName(institutData.name);
@@ -49,7 +49,7 @@ function InstitutUpdate() {
             university
         };
 
-        axios.put(`http://localhost:8082/admin/institut/${id}`, institutData)
+        axios.put(`http://localhost:80/admin/institut/${id}`, institutData, { headers: { "x-admin-token": process.env.ADMIN_TOKEN } })
             .then(() => navigate('/institut'))
             .catch(error => {
                 setError("Error updating institut");

@@ -11,7 +11,7 @@ function UniversityUpdate() {
 
     useEffect(() => {
         console.log("Matiere ID:", id);
-        axios.get(`http://localhost:8082/admin/university/${id}`)
+        axios.get(`http://localhost:80/admin/university/${id}`, { headers: { "x-admin-token": process.env.ADMIN_TOKEN } })
             .then(response => {
                 const matiereData = response.data;
                 setName(matiereData.name);
@@ -31,7 +31,7 @@ function UniversityUpdate() {
             name,
         };
 
-        axios.put(`http://localhost:8082/admin/university/${id}`, matiereData)
+        axios.put(`http://localhost:80/admin/university/${id}`, matiereData, { headers: { "x-admin-token": process.env.ADMIN_TOKEN } })
             .then(() => navigate('/university/'))
             .catch(error => {
                 setError("Error updating univerity");

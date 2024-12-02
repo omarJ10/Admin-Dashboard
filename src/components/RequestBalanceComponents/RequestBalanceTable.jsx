@@ -13,7 +13,13 @@ const RequestBalanceTable = () => {
 
   useEffect(() => {
     // Fetch request balances from the server
-    fetch("http://localhost:8082/api/fetchRequestBalances")
+    fetch("http://localhost:80/api/fetchRequestBalances",{
+      method: 'GET',
+      headers: {
+        "Content-Type": "application/json",
+        "x-admin-token": process.env.ADMIN_TOKEN
+      },
+    })
       .then(response => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);

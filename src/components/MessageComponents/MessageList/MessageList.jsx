@@ -15,7 +15,14 @@ function MessageList() {
     const fetchMessages = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8082/api/contact_messages"
+          "http://localhost:80/api/contact_messages",
+          {
+            headers: {
+              "Content-Type": "application/json",
+              "x-admin-token":
+                process.env.ADMIN_TOKEN,
+            },
+          }
         );
 
         // Check if response.data.messages is an array
@@ -39,7 +46,13 @@ function MessageList() {
 
   function handleDelete(id) {
     try {
-      axios.delete(`http://localhost:8082/api/contact_messages/${id}`);
+      axios.delete(`http://localhost:80/api/contact_messages/${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+          "x-admin-token":
+            process.env.ADMIN_TOKEN,
+        },
+      });
       setMessages(messages.filter((message) => message._id !== id));
     } catch (err) {
       console.error("Error deleting message:", err);
