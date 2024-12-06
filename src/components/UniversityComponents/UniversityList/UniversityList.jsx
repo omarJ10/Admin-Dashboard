@@ -13,13 +13,15 @@ function UniversityList() {
   useEffect(() => {
     const fetchUniversities = async () => {
       try {
-        const response = await axios.get("http://localhost:80/admin/university/", {
-          headers: {
-            "Content-Type": "application/json",
-            "x-admin-token":
-              process.env.ADMIN_TOKEN,
-          },
-        });
+        const response = await axios.get(
+          "http://localhost:80/admin/university/",
+          {
+            headers: {
+              "Content-Type": "application/json",
+              "x-admin-token": process.env.REACT_APP_ADMIN_TOKEN,
+            },
+          }
+        );
         console.log(response.data);
         setUniversity(response.data);
       } catch (err) {
@@ -43,8 +45,7 @@ function UniversityList() {
       await axios.delete(`http://localhost:80/admin/university/${id}`, {
         headers: {
           "Content-Type": "application/json",
-          "x-admin-token":
-            process.env.ADMIN_TOKEN,
+          "x-admin-token": process.env.REACT_APP_ADMIN_TOKEN,
         },
       });
       setUniversity(universities.filter((document) => document._id !== id));
@@ -91,7 +92,12 @@ function UniversityList() {
 
   return (
     <Container maxWidth="lg" style={{ marginTop: "20px" }}>
-      <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        mb={2}
+      >
         <Typography variant="h5" component="h1">
           University List
         </Typography>

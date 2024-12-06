@@ -27,8 +27,7 @@ function EventEdit() {
     axios
       .get(`http://localhost:80/api/events/${id}`, {
         headers: {
-          "x-admin-token":
-            process.env.ADMIN_TOKEN,
+          "x-admin-token": process.env.REACT_APP_ADMIN_TOKEN,
           "Content-Type": "application/json",
         },
       })
@@ -70,8 +69,7 @@ function EventEdit() {
     axios
       .put(`http://localhost:80/api/events/${id}`, eventData, {
         headers: {
-          "x-admin-token":
-            process.env.ADMIN_TOKEN,
+          "x-admin-token": process.env.REACT_APP_ADMIN_TOKEN,
           "Content-Type": "application/json",
         },
       })

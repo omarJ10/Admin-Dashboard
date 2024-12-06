@@ -16,8 +16,7 @@ function InstitutList() {
         const response = await axios.get("http://localhost:80/admin/institut", {
           headers: {
             "Content-Type": "application/json",
-            "x-admin-token":
-              process.env.ADMIN_TOKEN,
+            "x-admin-token": process.env.REACT_APP_ADMIN_TOKEN,
           },
         });
         setInstituts(response.data);
@@ -35,8 +34,7 @@ function InstitutList() {
       await axios.delete(`http://localhost:80/admin/institut/${id}`, {
         headers: {
           "Content-Type": "application/json",
-          "x-admin-token":
-            process.env.ADMIN_TOKEN,
+          "x-admin-token": process.env.REACT_APP_ADMIN_TOKEN,
         },
       });
       setInstituts(instituts.filter((institut) => institut._id !== id));

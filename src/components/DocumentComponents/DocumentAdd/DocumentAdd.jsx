@@ -31,8 +31,8 @@ function DocumentAdd() {
           "http://localhost:80/admin/university",
           {
             headers: {
-              "x-admin-token":
-                process.env.ADMIN_TOKEN,
+              "Content-Type": "application/json",
+              "x-admin-token": process.env.REACT_APP_ADMIN_TOKEN,
             },
           }
         );
@@ -44,15 +44,12 @@ function DocumentAdd() {
 
     const fetchInstituts = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:80/admin/institut",
-          {
-            headers: {
-              "x-admin-token":
-                process.env.ADMIN_TOKEN,
-            },
-          }
-        );
+        const response = await axios.get("http://localhost:80/admin/institut", {
+          headers: {
+            "Content-Type": "application/json",
+            "x-admin-token": process.env.REACT_APP_ADMIN_TOKEN,
+          },
+        });
         setInstitutOptions(response.data);
       } catch (error) {
         console.error("Error fetching institutes:", error);
@@ -65,24 +62,23 @@ function DocumentAdd() {
 
   const addDocument = async (e) => {
     e.preventDefault();
-
+    const data = {
+      university,
+      institut,
+      niveau,
+      Matieres: materials,
+      description,
+      link,
+    };
     try {
       const response = await axios.post(
         "http://localhost:80/admin/document/insert",
+        data,
         {
           headers: {
             "Content-Type": "application/json",
-            "x-admin-token":
-              process.env.ADMIN_TOKEN,
+            "x-admin-token": process.env.REACT_APP_ADMIN_TOKEN,
           },
-        },
-        {
-          university,
-          institut,
-          niveau,
-          Matieres: materials,
-          description,
-          link,
         }
       );
       console.log(response.data);

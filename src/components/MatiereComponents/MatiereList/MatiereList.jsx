@@ -16,8 +16,7 @@ function MatiereList() {
         const response = await axios.get("http://localhost:80/api/matieres/", {
           headers: {
             "Content-Type": "application/json",
-            "x-admin-token":
-              process.env.REACT_APP_ADMIN_TOKEN,
+            "x-admin-token": process.env.REACT_APP_ADMIN_TOKEN,
           },
         });
         console.log(response.data);
@@ -43,8 +42,7 @@ function MatiereList() {
       await axios.delete(`http://localhost:80/api/matieres/${id}`, {
         headers: {
           "Content-Type": "application/json",
-          "x-admin-token":
-            process.env.ADMIN_TOKEN,
+          "x-admin-token": process.env.REACT_APP_ADMIN_TOKEN,
         },
       });
       setDocument(matieres.filter((document) => document._id !== id));
@@ -92,7 +90,12 @@ function MatiereList() {
 
   return (
     <Container maxWidth="lg" style={{ marginTop: "20px" }}>
-      <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        mb={2}
+      >
         <Typography variant="h5" component="h1">
           Matiere List
         </Typography>
