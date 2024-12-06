@@ -15,7 +15,12 @@ function InstitutUpdate() {
     useEffect(() => {
         const fetchUniversities = async () => {
             try {
-                const response = await axios.get("http://localhost:80/admin/university", { headers: { "x-admin-token": process.env.ADMIN_TOKEN } }); // Adjust endpoint if needed
+                const response = await axios.get("http://localhost:80/admin/university", 
+                    { 
+                        headers: { "x-admin-token": process.env.REACT_APP_ADMIN_TOKEN },
+                        
+                    
+                    }); // Adjust endpoint if needed
                 setUniversities(response.data);
             } catch (error) {
                 setError("Error fetching universities list");
@@ -28,11 +33,14 @@ function InstitutUpdate() {
 
     // Fetch specific institut details to prefill the form
     useEffect(() => {
-        axios.get(`http://localhost:80/admin/institut/${id}`, { headers: { "x-admin-token": process.env.ADMIN_TOKEN } })
+        axios.get(`http://localhost:80/admin/institut/${id}`,
+            { headers: { "x-admin-token": process.env.REACT_APP_ADMIN_TOKEN } })
             .then(response => {
                 const institutData = response.data;
                 setName(institutData.name);
                 setUniversity(institutData.university);
+                console.log(institutData);
+                
             })
             .catch(error => {
                 setError("Error fetching institut data");
@@ -49,7 +57,12 @@ function InstitutUpdate() {
             university
         };
 
-        axios.put(`http://localhost:80/admin/institut/${id}`, institutData, { headers: { "x-admin-token": process.env.ADMIN_TOKEN } })
+        axios.put(`http://localhost:80/admin/institut/${id}`, institutData, 
+            {
+                headers: {
+                    "x-admin-token": process.env.REACT_APP_ADMIN_TOKEN
+                }
+            })
             .then(() => navigate('/institut'))
             .catch(error => {
                 setError("Error updating institut");

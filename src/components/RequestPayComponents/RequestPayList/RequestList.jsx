@@ -35,7 +35,7 @@ export default function PaymentTable() {
 
   const fetchPayments = useCallback(async () => {
     try {
-      console.log("hello "+process.env.ADMIN_TOKEN);
+      console.log("hello "+process.env.REACT_APP_ADMIN_TOKEN);
       const response = await fetch("http://localhost:80/api/fetchrequests2",{
         method: 'GET',
         headers: {
@@ -66,7 +66,7 @@ export default function PaymentTable() {
       method: "PUT",
       headers: { 
         "Content-Type": "application/json" ,
-        'x-admin-token': process.env.ADMIN_TOKEN
+        'x-admin-token': process.env.REACT_APP_ADMIN_TOKEN
       },
       body: JSON.stringify({ status: newStatus }),
     })

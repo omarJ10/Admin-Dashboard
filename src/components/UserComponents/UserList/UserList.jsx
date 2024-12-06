@@ -10,13 +10,17 @@ function UserList() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
+        console.log("Token in UserList:", process.env.REACT_APP_ADMIN_TOKEN);
+        console.log("Token in DocumentList:", process.env.REACT_APP_ADMIN_TOKEN);
+        
         const response = await axios.get("http://localhost:80/admin/users", {
           
           headers: {
             "Content-Type": "application/json",
-            "x-admin-token":process.env.ADMIN_TOKEN,
+            "x-admin-token": process.env.REACT_APP_ADMIN_TOKEN,
           },
         });
+        
         setUsers(response.data);
       } catch (err) {
         console.error("Error fetching documents:", err);
@@ -43,7 +47,7 @@ function UserList() {
         headers: {
           "Content-Type": "application/json",
           "x-admin-token":
-          process.env.ADMIN_TOKEN,
+          process.env.REACT_APP_ADMIN_TOKEN,
         },
       });
       setUsers(users.filter((user) => user._id !== id));

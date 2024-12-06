@@ -17,7 +17,7 @@ const RequestBalanceTable = () => {
       method: 'GET',
       headers: {
         "Content-Type": "application/json",
-        "x-admin-token": process.env.ADMIN_TOKEN
+        "x-admin-token": process.env.REACT_APP_ADMIN_TOKEN
       },
     })
       .then(response => {

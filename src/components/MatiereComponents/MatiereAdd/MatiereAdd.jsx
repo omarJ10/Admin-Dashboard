@@ -24,7 +24,7 @@ function MatiereAdd() {
             const response = await axios.post("http://localhost:80/api/matieres/add", matiereData, {
                 headers: {
                     "Content-Type": "application/json",
-                    "x-admin-token": process.env.ADMIN_TOKEN,
+                    "x-admin-token": process.env.REACT_APP_ADMIN_TOKEN,
                 },
             });
             console.log(response.data);

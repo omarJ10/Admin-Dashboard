@@ -20,7 +20,7 @@ function MessageList() {
             headers: {
               "Content-Type": "application/json",
               "x-admin-token":
-                process.env.ADMIN_TOKEN,
+                process.env.REACT_APP_ADMIN_TOKEN,
             },
           }
         );
@@ -50,7 +50,7 @@ function MessageList() {
         headers: {
           "Content-Type": "application/json",
           "x-admin-token":
-            process.env.ADMIN_TOKEN,
+            process.env.REACT_APP_ADMIN_TOKEN,
         },
       });
       setMessages(messages.filter((message) => message._id !== id));

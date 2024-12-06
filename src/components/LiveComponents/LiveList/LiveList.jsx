@@ -35,7 +35,7 @@ function LiveList() {
             method: 'GET',
             headers: {
                 "Content-Type": "application/json",
-                "x-admin-token": process.env.ADMIN_TOKEN
+                "x-admin-token": process.env.REACT_APP_ADMIN_TOKEN
             }
         })
             .then(response => response.json())
@@ -48,7 +48,7 @@ function LiveList() {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                'x-admin-token': process.env.ADMIN_TOKEN
+                'x-admin-token': process.env.REACT_APP_ADMIN_TOKEN
             },
             body: JSON.stringify({ status: newStatus }),
         })

@@ -15,7 +15,7 @@ function MatiereEdit() {
         axios.get(`http://localhost:80/api/matieres/${id}`, {
             headers: {
                 "Content-Type": "application/json",
-                "x-admin-token": process.env.ADMIN_TOKEN,
+                "x-admin-token": "gqAe5BCRtlGOVfA1tsE6MJQb69mbLElAok7vGp8PIyKRdkmqkXvqSurpZEHjasser",
             },
         })
             .then(response => {

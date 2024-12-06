@@ -17,7 +17,7 @@ function EventList() {
                     headers: {
                         "Content-Type": "application/json",
                         "x-admin-token":
-                            process.env.ADMIN_TOKEN,
+                            process.env.REACT_APP_ADMIN_TOKEN,
                     },
                 });
                 setDocument(response.data);
@@ -34,7 +34,7 @@ function EventList() {
                 headers: {
                     "Content-Type": "application/json",
                     "x-admin-token":
-                        process.env.ADMIN_TOKEN,
+                        process.env.REACT_APP_ADMIN_TOKEN,
                 },
             });
             setDocument(events.filter((document) => document._id !== id));
