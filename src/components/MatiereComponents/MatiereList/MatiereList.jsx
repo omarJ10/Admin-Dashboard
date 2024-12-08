@@ -13,12 +13,15 @@ function MatiereList() {
   useEffect(() => {
     const fetchMatieres = async () => {
       try {
-        const response = await axios.get("http://localhost:80/api/matieres/", {
-          headers: {
-            "Content-Type": "application/json",
-            "x-admin-token": process.env.REACT_APP_ADMIN_TOKEN,
-          },
-        });
+        const response = await axios.get(
+          "http://18.211.148.152/api/matieres/",
+          {
+            headers: {
+              "Content-Type": "application/json",
+              "x-admin-token": process.env.REACT_APP_ADMIN_TOKEN,
+            },
+          }
+        );
         console.log(response.data);
         setDocument(response.data);
       } catch (err) {
@@ -39,7 +42,7 @@ function MatiereList() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:80/api/matieres/${id}`, {
+      await axios.delete(`http://18.211.148.152/api/matieres/${id}`, {
         headers: {
           "Content-Type": "application/json",
           "x-admin-token": process.env.REACT_APP_ADMIN_TOKEN,

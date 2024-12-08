@@ -26,7 +26,7 @@ function UniveristyAdd() {
 
     try {
       const response = await axios.post(
-        "http://localhost:80/admin/university/insert",
+        "http://18.211.148.152/admin/university/insert",
         matiereData,
         {
           headers: {

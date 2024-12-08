@@ -27,7 +27,7 @@ function MatiereAdd() {
 
     try {
       const response = await axios.post(
-        "http://localhost:80/api/matieres/add",
+        "http://18.211.148.152/api/matieres/add",
         matiereData,
         {
           headers: {

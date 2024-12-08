@@ -11,16 +11,18 @@ function UserList() {
     const fetchUsers = async () => {
       try {
         console.log("Token in UserList:", process.env.REACT_APP_ADMIN_TOKEN);
-        console.log("Token in DocumentList:", process.env.REACT_APP_ADMIN_TOKEN);
-        
-        const response = await axios.get("http://localhost:80/admin/users", {
-          
+        console.log(
+          "Token in DocumentList:",
+          process.env.REACT_APP_ADMIN_TOKEN
+        );
+
+        const response = await axios.get("http://18.211.148.152/admin/users", {
           headers: {
             "Content-Type": "application/json",
             "x-admin-token": process.env.REACT_APP_ADMIN_TOKEN,
           },
         });
-        
+
         setUsers(response.data);
       } catch (err) {
         console.error("Error fetching documents:", err);
@@ -43,11 +45,10 @@ function UserList() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:80/admin/user/${id}`, {
+      await axios.delete(`http://18.211.148.152/admin/user/${id}`, {
         headers: {
           "Content-Type": "application/json",
-          "x-admin-token":
-          process.env.REACT_APP_ADMIN_TOKEN,
+          "x-admin-token": process.env.REACT_APP_ADMIN_TOKEN,
         },
       });
       setUsers(users.filter((user) => user._id !== id));
@@ -55,8 +56,6 @@ function UserList() {
       console.error(err);
     }
   };
-
-  
 
   const columns = [
     { field: "_id", headerName: "ID", width: 70 },

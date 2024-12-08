@@ -16,25 +16,25 @@ import "./Table.css";
 
 // A helper function for styling the status cell
 const makeStyle = (status) => {
-  if (status === 'accepted' || status === 'Approved') {
+  if (status === "accepted" || status === "Approved") {
     return {
-      background: 'rgb(145 254 159 / 47%)',
-      color: 'green',
+      background: "rgb(145 254 159 / 47%)",
+      color: "green",
     };
-  } else if (status === 'Pending') {
+  } else if (status === "Pending") {
     return {
-      background: '#ffadad8f',
-      color: 'red',
+      background: "#ffadad8f",
+      color: "red",
     };
-  } else if (status === 'not valid') {
+  } else if (status === "not valid") {
     return {
-      background: '#d3d3d3', // Grey background for "not valid" status
-      color: '#a9a9a9',      // Darker grey text color
+      background: "#d3d3d3", // Grey background for "not valid" status
+      color: "#a9a9a9", // Darker grey text color
     };
   } else {
     return {
-      background: '#59bfff',
-      color: 'white',
+      background: "#59bfff",
+      color: "white",
     };
   }
 };
@@ -44,36 +44,37 @@ export default function BasicTable() {
   const [filterStatus, setFilterStatus] = useState("all"); // State for the selected filter
 
   useEffect(() => {
-    fetch('http://localhost:80/api/fetchrequests', {
-      method: 'GET',
+    fetch("http://18.211.148.152/api/fetchrequests", {
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json',
-        'x-admin-token': 'gqAe5BCRtlGOVfA1tsE6MJQb69mbLElAok7vGp8PIyKRdkmqkXvqSurpZEHjasser',
+        "Content-Type": "application/json",
+        "x-admin-token":
+          "gqAe5BCRtlGOVfA1tsE6MJQb69mbLElAok7vGp8PIyKRdkmqkXvqSurpZEHjasser",
       },
     })
-      .then(response => response.json())
-      .then(data => setRows(data))
-      .catch(error => console.error('Error fetching data:', error));
+      .then((response) => response.json())
+      .then((data) => setRows(data))
+      .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
   const handleStatusUpdate = (id, newStatus) => {
-    fetch(`http://localhost:80/api/request/${id}`, {
-      method: 'PUT',
+    fetch(`http://18.211.148.152/api/request/${id}`, {
+      method: "PUT",
       headers: {
-        'Content-Type': 'application/json',
-        "x-admin-token": process.env.REACT_APP_ADMIN_TOKEN
+        "Content-Type": "application/json",
+        "x-admin-token": process.env.REACT_APP_ADMIN_TOKEN,
       },
       body: JSON.stringify({ status: newStatus }),
     })
-      .then(response => response.json())
-      .then(updatedRequest => {
-        setRows(prevRows =>
-          prevRows.map(row =>
+      .then((response) => response.json())
+      .then((updatedRequest) => {
+        setRows((prevRows) =>
+          prevRows.map((row) =>
             row._id === updatedRequest._id ? updatedRequest : row
           )
         );
       })
-      .catch(error => console.error('Error updating status:', error));
+      .catch((error) => console.error("Error updating status:", error));
   };
 
   // Filter the rows based on the selected filter status
@@ -135,21 +136,30 @@ export default function BasicTable() {
                 <TableCell align="left">{row.num}</TableCell>
                 <TableCell align="left">{row.gmail}</TableCell>
                 <TableCell align="left">
-                  <span className="status" style={makeStyle(row.status)}>{row.status}</span>
+                  <span className="status" style={makeStyle(row.status)}>
+                    {row.status}
+                  </span>
                 </TableCell>
                 <TableCell align="left" className="Details">
                   <Button
                     variant="contained"
                     className="btn btn-primary"
-                    onClick={() => handleStatusUpdate(row._id, row.status === 'waiting' ? 'accepted' : 'waiting')}
+                    onClick={() =>
+                      handleStatusUpdate(
+                        row._id,
+                        row.status === "waiting" ? "accepted" : "waiting"
+                      )
+                    }
                   >
-                    {row.status === 'waiting' ? 'Grant Access' : 'Revoke Access'}
+                    {row.status === "waiting"
+                      ? "Grant Access"
+                      : "Revoke Access"}
                   </Button>
                   <Button
                     variant="contained"
                     className="btn btn-danger"
-                    style={{ marginLeft: '10px' }}
-                    onClick={() => handleStatusUpdate(row._id, 'not valid')}
+                    style={{ marginLeft: "10px" }}
+                    onClick={() => handleStatusUpdate(row._id, "not valid")}
                   >
                     x
                   </Button>

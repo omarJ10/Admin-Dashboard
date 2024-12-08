@@ -25,7 +25,7 @@ function EventEdit() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:80/api/events/${id}`, {
+      .get(`http://18.211.148.152/api/events/${id}`, {
         headers: {
           "x-admin-token": process.env.REACT_APP_ADMIN_TOKEN,
           "Content-Type": "application/json",
@@ -67,7 +67,7 @@ function EventEdit() {
     };
 
     axios
-      .put(`http://localhost:80/api/events/${id}`, eventData, {
+      .put(`http://18.211.148.152/api/events/${id}`, eventData, {
         headers: {
           "x-admin-token": process.env.REACT_APP_ADMIN_TOKEN,
           "Content-Type": "application/json",

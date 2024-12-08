@@ -14,7 +14,7 @@ function UniversityList() {
     const fetchUniversities = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:80/admin/university/",
+          "http://18.211.148.152/admin/university/",
           {
             headers: {
               "Content-Type": "application/json",
@@ -42,7 +42,7 @@ function UniversityList() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:80/admin/university/${id}`, {
+      await axios.delete(`http://18.211.148.152/admin/university/${id}`, {
         headers: {
           "Content-Type": "application/json",
           "x-admin-token": process.env.REACT_APP_ADMIN_TOKEN,

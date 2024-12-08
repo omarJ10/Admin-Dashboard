@@ -24,7 +24,7 @@ function InstitutAdd() {
     const fetchUniversities = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:80/admin/university",
+          "http://18.211.148.152/admin/university",
           {
             method: "GET",
             headers: {
@@ -48,7 +48,7 @@ function InstitutAdd() {
 
     try {
       const response = await axios.post(
-        "http://localhost:80/admin/institut/insert",
+        "http://18.211.148.152/admin/institut/insert",
         data,
         {
           headers: {

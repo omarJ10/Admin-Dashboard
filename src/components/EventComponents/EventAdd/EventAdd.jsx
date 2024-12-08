@@ -27,7 +27,7 @@ function EventAdd() {
   useEffect(() => {
     // Fetch the list of matieres from the server
     axios
-      .get("http://localhost:80/api/matieres", {
+      .get("http://18.211.148.152/api/matieres", {
         headers: {
           "Content-Type": "application/json",
           "x-admin-token": process.env.REACT_APP_ADMIN_TOKEN,
@@ -61,7 +61,7 @@ function EventAdd() {
 
     try {
       const response = await axios.post(
-        "http://localhost:80/api/events",
+        "http://18.211.148.152/api/events",
         eventData,
         {
           headers: {

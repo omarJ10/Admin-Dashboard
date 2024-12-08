@@ -15,12 +15,11 @@ function MessageList() {
     const fetchMessages = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:80/api/contact_messages",
+          "http://18.211.148.152/api/contact_messages",
           {
             headers: {
               "Content-Type": "application/json",
-              "x-admin-token":
-                process.env.REACT_APP_ADMIN_TOKEN,
+              "x-admin-token": process.env.REACT_APP_ADMIN_TOKEN,
             },
           }
         );
@@ -46,11 +45,10 @@ function MessageList() {
 
   function handleDelete(id) {
     try {
-      axios.delete(`http://localhost:80/api/contact_messages/${id}`, {
+      axios.delete(`http://18.211.148.152/api/contact_messages/${id}`, {
         headers: {
           "Content-Type": "application/json",
-          "x-admin-token":
-            process.env.REACT_APP_ADMIN_TOKEN,
+          "x-admin-token": process.env.REACT_APP_ADMIN_TOKEN,
         },
       });
       setMessages(messages.filter((message) => message._id !== id));
@@ -99,7 +97,9 @@ function MessageList() {
       className="data-grid-container"
       style={{ height: "400px", width: "100%" }}
     >
-      <h1 style={{ textAlign: "center", marginTop: "100px" }}>Messages Management</h1>
+      <h1 style={{ textAlign: "center", marginTop: "100px" }}>
+        Messages Management
+      </h1>
       <DataGrid
         rows={rows}
         columns={columns}

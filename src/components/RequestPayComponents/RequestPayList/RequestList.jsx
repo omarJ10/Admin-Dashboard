@@ -35,12 +35,13 @@ export default function PaymentTable() {
 
   const fetchPayments = useCallback(async () => {
     try {
-      console.log("hello "+process.env.REACT_APP_ADMIN_TOKEN);
-      const response = await fetch("http://localhost:80/api/fetchrequests2",{
-        method: 'GET',
+      console.log("hello " + process.env.REACT_APP_ADMIN_TOKEN);
+      const response = await fetch("http://18.211.148.152/api/fetchrequests2", {
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
-          "x-admin-token": "gqAe5BCRtlGOVfA1tsE6MJQb69mbLElAok7vGp8PIyKRdkmqkXvqSurpZEHjasser"
+          "x-admin-token":
+            "gqAe5BCRtlGOVfA1tsE6MJQb69mbLElAok7vGp8PIyKRdkmqkXvqSurpZEHjasser",
         },
       });
       if (!response.ok) {
@@ -62,11 +63,11 @@ export default function PaymentTable() {
   }, [fetchPayments]);
 
   const handleStatusUpdate = (id, newStatus) => {
-    fetch(`http://localhost:80/api/request2/${id}`, {
+    fetch(`http://18.211.148.152/api/request2/${id}`, {
       method: "PUT",
-      headers: { 
-        "Content-Type": "application/json" ,
-        'x-admin-token': process.env.REACT_APP_ADMIN_TOKEN
+      headers: {
+        "Content-Type": "application/json",
+        "x-admin-token": process.env.REACT_APP_ADMIN_TOKEN,
       },
       body: JSON.stringify({ status: newStatus }),
     })
@@ -74,7 +75,9 @@ export default function PaymentTable() {
       .then((updatedPayment) => {
         console.log("Updated payment:", updatedPayment);
         setRows((prevRows) =>
-          prevRows.map((row) => (row._id === updatedPayment._id ? updatedPayment : row))
+          prevRows.map((row) =>
+            row._id === updatedPayment._id ? updatedPayment : row
+          )
         );
       })
       .catch((error) => console.error("Error updating status:", error));
@@ -112,7 +115,10 @@ export default function PaymentTable() {
         </Select>
       </FormControl>
 
-      <TableContainer component={Paper} style={{ boxShadow: "0px 13px 20px 0px #80808029" }}>
+      <TableContainer
+        component={Paper}
+        style={{ boxShadow: "0px 13px 20px 0px #80808029" }}
+      >
         <Table sx={{ minWidth: 650 }} aria-label="payment table">
           <TableHead>
             <TableRow>
@@ -127,24 +133,36 @@ export default function PaymentTable() {
           </TableHead>
           <TableBody>
             {filteredRows.map((row) => (
-              <TableRow key={row._id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
-                <TableCell component="th" scope="row">{row._id}</TableCell>
+              <TableRow
+                key={row._id}
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              >
+                <TableCell component="th" scope="row">
+                  {row._id}
+                </TableCell>
                 <TableCell align="left">{row.email}</TableCell>
                 <TableCell align="left">{row.credits}</TableCell>
                 <TableCell align="left">{row.num}</TableCell>
                 <TableCell align="left">{row.aut}</TableCell>
                 <TableCell align="left">
-                  <span className="status" style={makeStyle(row.status)}>{row.status}</span>
+                  <span className="status" style={makeStyle(row.status)}>
+                    {row.status}
+                  </span>
                 </TableCell>
                 <TableCell align="left" className="Details">
                   <Button
                     variant="contained"
                     className="btn btn-primary"
                     onClick={() =>
-                      handleStatusUpdate(row._id, row.status === "waiting" ? "accepted" : "waiting")
+                      handleStatusUpdate(
+                        row._id,
+                        row.status === "waiting" ? "accepted" : "waiting"
+                      )
                     }
                   >
-                    {row.status === "waiting" ? "Mark as Paid" : "Revoke Payment"}
+                    {row.status === "waiting"
+                      ? "Mark as Paid"
+                      : "Revoke Payment"}
                   </Button>
                   <Button
                     variant="contained"

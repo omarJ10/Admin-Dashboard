@@ -27,7 +27,7 @@ function InstitutUpdate() {
     const fetchUniversities = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:80/admin/university",
+          "http://18.211.148.152/admin/university",
           {
             headers: {
               "Content-Type": "application/json",
@@ -48,7 +48,7 @@ function InstitutUpdate() {
   // Fetch specific institut details to prefill the form
   useEffect(() => {
     axios
-      .get(`http://localhost:80/admin/institut/${id}`, {
+      .get(`http://18.211.148.152/admin/institut/${id}`, {
         headers: {
           "Content-Type": "application/json",
           "x-admin-token": process.env.REACT_APP_ADMIN_TOKEN,
@@ -76,7 +76,7 @@ function InstitutUpdate() {
     };
 
     axios
-      .put(`http://localhost:80/admin/institut/${id}`, institutData, {
+      .put(`http://18.211.148.152/admin/institut/${id}`, institutData, {
         headers: {
           "Content-Type": "application/json",
           "x-admin-token": process.env.REACT_APP_ADMIN_TOKEN,

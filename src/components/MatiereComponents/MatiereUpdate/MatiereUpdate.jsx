@@ -20,7 +20,7 @@ function MatiereEdit() {
   useEffect(() => {
     console.log("Matiere ID:", id);
     axios
-      .get(`http://localhost:80/api/matieres/${id}`, {
+      .get(`http://18.211.148.152/api/matieres/${id}`, {
         headers: {
           "x-admin-token": process.env.REACT_APP_ADMIN_TOKEN,
           "Content-Type": "application/json",
@@ -47,7 +47,7 @@ function MatiereEdit() {
     };
 
     axios
-      .put(`http://localhost:80/api/matieres/${id}`, matiereData, {
+      .put(`http://18.211.148.152/api/matieres/${id}`, matiereData, {
         headers: {
           "x-admin-token": process.env.REACT_APP_ADMIN_TOKEN,
           "Content-Type": "application/json",

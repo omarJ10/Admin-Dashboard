@@ -30,7 +30,7 @@ function DocumentUpdate() {
   useEffect(() => {
     // Fetch the document data
     axios
-      .get(`http://localhost:80/admin/document/${id}`, {
+      .get(`http://18.211.148.152/admin/document/${id}`, {
         headers: {
           "x-admin-token": process.env.REACT_APP_ADMIN_TOKEN,
           "Content-Type": "application/json",
@@ -48,7 +48,7 @@ function DocumentUpdate() {
 
     // Fetch universities and institutes for dropdowns
     axios
-      .get("http://localhost:80/admin/university", {
+      .get("http://18.211.148.152/admin/university", {
         headers: {
           "x-admin-token": process.env.REACT_APP_ADMIN_TOKEN,
           "Content-Type": "application/json",
@@ -58,7 +58,7 @@ function DocumentUpdate() {
       .catch((error) => console.log("Error fetching universities:", error));
 
     axios
-      .get("http://localhost:80/admin/institut", {
+      .get("http://18.211.148.152/admin/institut", {
         headers: {
           "Content-Type": "application/json",
           "x-admin-token": process.env.REACT_APP_ADMIN_TOKEN,
@@ -80,7 +80,7 @@ function DocumentUpdate() {
     };
 
     axios
-      .put(`http://localhost:80/admin/document/${id}`, data, {
+      .put(`http://18.211.148.152/admin/document/${id}`, data, {
         headers: {
           "x-admin-token": process.env.REACT_APP_ADMIN_TOKEN,
           "Content-Type": "application/json",

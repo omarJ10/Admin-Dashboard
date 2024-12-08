@@ -19,7 +19,7 @@ function UniversityUpdate() {
   useEffect(() => {
     console.log("Matiere ID:", id);
     axios
-      .get(`http://localhost:80/admin/university/${id}`, {
+      .get(`http://18.211.148.152/admin/university/${id}`, {
         headers: {
           "Content-Type": "application/json",
           "x-admin-token": process.env.REACT_APP_ADMIN_TOKEN,
@@ -44,7 +44,7 @@ function UniversityUpdate() {
     };
 
     axios
-      .put(`http://localhost:80/admin/university/${id}`, matiereData, {
+      .put(`http://18.211.148.152/admin/university/${id}`, matiereData, {
         headers: {
           "Content-Type": "application/json",
           "x-admin-token": process.env.REACT_APP_ADMIN_TOKEN,

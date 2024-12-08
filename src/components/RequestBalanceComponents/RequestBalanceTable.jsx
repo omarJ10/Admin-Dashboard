@@ -13,24 +13,26 @@ const RequestBalanceTable = () => {
 
   useEffect(() => {
     // Fetch request balances from the server
-    fetch("http://localhost:80/api/fetchRequestBalances",{
-      method: 'GET',
+    fetch("http://18.211.148.152/api/fetchRequestBalances", {
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "x-admin-token": process.env.REACT_APP_ADMIN_TOKEN
+        "x-admin-token": process.env.REACT_APP_ADMIN_TOKEN,
       },
     })
-      .then(response => {
+      .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         return response.json();
       })
-      .then(data => {
+      .then((data) => {
         console.log("Fetched request balances:", data); // Debug log
         setRequests(data); // Update state with fetched data
       })
-      .catch(error => console.error("Error fetching request balances:", error));
+      .catch((error) =>
+        console.error("Error fetching request balances:", error)
+      );
   }, []);
 
   return (

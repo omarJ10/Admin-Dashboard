@@ -14,12 +14,15 @@ function DocumentList() {
     const fetchDocuments = async () => {
       try {
         console.log(process.env.ADMIN_TOKEN);
-        const response = await axios.get("http://localhost:80/admin/document", {
-          headers: {
-            "Content-Type": "application/json",
-            "x-admin-token": process.env.REACT_APP_ADMIN_TOKEN,
-          },
-        });
+        const response = await axios.get(
+          "http://18.211.148.152/admin/document",
+          {
+            headers: {
+              "Content-Type": "application/json",
+              "x-admin-token": process.env.REACT_APP_ADMIN_TOKEN,
+            },
+          }
+        );
         setDocument(response.data);
       } catch (err) {
         console.error("Error fetching documents:", err);
@@ -30,7 +33,7 @@ function DocumentList() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:80/admin/document/${id}`, {
+      await axios.delete(`http://18.211.148.152/admin/document/${id}`, {
         headers: {
           "Content-Type": "application/json",
           "x-admin-token": process.env.REACT_APP_ADMIN_TOKEN,

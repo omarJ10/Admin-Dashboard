@@ -28,7 +28,7 @@ function DocumentAdd() {
     const fetchUniversities = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:80/admin/university",
+          "http://18.211.148.152/admin/university",
           {
             headers: {
               "Content-Type": "application/json",
@@ -44,12 +44,15 @@ function DocumentAdd() {
 
     const fetchInstituts = async () => {
       try {
-        const response = await axios.get("http://localhost:80/admin/institut", {
-          headers: {
-            "Content-Type": "application/json",
-            "x-admin-token": process.env.REACT_APP_ADMIN_TOKEN,
-          },
-        });
+        const response = await axios.get(
+          "http://18.211.148.152/admin/institut",
+          {
+            headers: {
+              "Content-Type": "application/json",
+              "x-admin-token": process.env.REACT_APP_ADMIN_TOKEN,
+            },
+          }
+        );
         setInstitutOptions(response.data);
       } catch (error) {
         console.error("Error fetching institutes:", error);
@@ -72,7 +75,7 @@ function DocumentAdd() {
     };
     try {
       const response = await axios.post(
-        "http://localhost:80/admin/document/insert",
+        "http://18.211.148.152/admin/document/insert",
         data,
         {
           headers: {
